@@ -4,7 +4,7 @@
 #
 Name     : fltk
 Version  : 1.3.4
-Release  : 2
+Release  : 3
 URL      : http://fltk.org/pub/fltk/1.3.4/fltk-1.3.4-source.tar.gz
 Source0  : http://fltk.org/pub/fltk/1.3.4/fltk-1.3.4-source.tar.gz
 Summary  : Fast Light Tool Kit (FLTK)
