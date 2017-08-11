@@ -4,12 +4,12 @@
 #
 Name     : fltk
 Version  : 1.3.4
-Release  : 3
+Release  : 4
 URL      : http://fltk.org/pub/fltk/1.3.4/fltk-1.3.4-source.tar.gz
 Source0  : http://fltk.org/pub/fltk/1.3.4/fltk-1.3.4-source.tar.gz
 Summary  : Fast Light Tool Kit (FLTK)
 Group    : Development/Tools
-License  : GPL-2.0 LGPL-2.0 LGPL-2.1 Libpng MIT
+License  : LGPL-2.0 LGPL-2.1 Libpng MIT
 Requires: fltk-bin
 Requires: fltk-lib
 Requires: fltk-doc
@@ -22,11 +22,11 @@ BuildRequires : groff
 BuildRequires : libXcursor-dev
 BuildRequires : libXinerama-dev
 BuildRequires : libjpeg-turbo-dev
+BuildRequires : libpng-dev
 BuildRequires : mesa-dev
 BuildRequires : pkgconfig(fontconfig)
 BuildRequires : pkgconfig(ice)
 BuildRequires : pkgconfig(libpng)
-BuildRequires : pkgconfig(x11)
 BuildRequires : pkgconfig(xft)
 Patch1: fltk-config-dynlibs.patch
 
@@ -88,11 +88,16 @@ lib components for the fltk package.
 %patch1 -p1
 
 %build
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
+export SOURCE_DATE_EPOCH=1502483932
 %configure --disable-static --enable-threads --enable-xft --enable-shared
 make V=1  %{?_smp_mflags}
 
 %install
+export SOURCE_DATE_EPOCH=1502483932
 rm -rf %{buildroot}
 %make_install
 
@@ -256,7 +261,10 @@ rm -rf %{buildroot}
 /usr/include/FL/names.h
 /usr/include/FL/win32.H
 /usr/include/FL/x.H
-/usr/lib64/*.so
+/usr/lib64/libfltk.so
+/usr/lib64/libfltk_forms.so
+/usr/lib64/libfltk_gl.so
+/usr/lib64/libfltk_images.so
 
 %files doc
 %defattr(-,root,root,-)
@@ -266,4 +274,7 @@ rm -rf %{buildroot}
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/*.so.*
+/usr/lib64/libfltk.so.1.3
+/usr/lib64/libfltk_forms.so.1.3
+/usr/lib64/libfltk_gl.so.1.3
+/usr/lib64/libfltk_images.so.1.3

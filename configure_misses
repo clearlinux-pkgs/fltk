@@ -1,0 +1,9 @@
+Configure miss: sys/stdtypes.h usability
+Configure miss: sys/stdtypes.h presence
+Configure miss: sys/stdtypes.h
+Configure miss: libpng/png.h usability
+Configure miss: libpng/png.h presence
+Configure miss: libpng/png.h
+Configure miss: pthread_create using -lpthreads
+Configure miss: xprop
+Configure miss: X overlay visuals
