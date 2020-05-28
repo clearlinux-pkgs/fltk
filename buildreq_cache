@@ -1,0 +1,12 @@
+1.3.4.2
+alsa-lib-dev
+doxygen
+fontconfig-dev
+freetype-dev
+glu-dev
+groff
+libXcursor-dev
+libjpeg-turbo-dev
+pkgconfig(fontconfig)
+pkgconfig(libpng)
+pkgconfig(xft)

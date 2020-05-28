@@ -1,3 +1,4 @@
+Configure miss: windres
 Configure miss: sys/stdtypes.h usability
 Configure miss: sys/stdtypes.h presence
 Configure miss: sys/stdtypes.h

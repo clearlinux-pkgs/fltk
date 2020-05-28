@@ -4,28 +4,29 @@
 #
 Name     : fltk
 Version  : 1.3.4.2
-Release  : 8
-URL      : http://fltk.org/pub/fltk/1.3.4/fltk-1.3.4-2-source.tar.gz
-Source0  : http://fltk.org/pub/fltk/1.3.4/fltk-1.3.4-2-source.tar.gz
+Release  : 9
+URL      : https://www.fltk.org/pub/fltk/1.3.4/fltk-1.3.4-2-source.tar.gz
+Source0  : https://www.fltk.org/pub/fltk/1.3.4/fltk-1.3.4-2-source.tar.gz
 Summary  : Fast Light Tool Kit (FLTK)
 Group    : Development/Tools
 License  : LGPL-2.0 LGPL-2.1 Libpng MIT
-Requires: fltk-bin
-Requires: fltk-lib
-Requires: fltk-doc
-Requires: fltk-data
+Requires: fltk-bin = %{version}-%{release}
+Requires: fltk-lib = %{version}-%{release}
+Requires: fltk-license = %{version}-%{release}
+Requires: fltk-man = %{version}-%{release}
 BuildRequires : alsa-lib-dev
+BuildRequires : buildreq-cmake
+BuildRequires : buildreq-configure
 BuildRequires : doxygen
+BuildRequires : fontconfig-dev
 BuildRequires : freetype-dev
 BuildRequires : glu-dev
 BuildRequires : groff
 BuildRequires : libXcursor-dev
-BuildRequires : libXinerama-dev
 BuildRequires : libjpeg-turbo-dev
 BuildRequires : libpng-dev
 BuildRequires : mesa-dev
 BuildRequires : pkgconfig(fontconfig)
-BuildRequires : pkgconfig(ice)
 BuildRequires : pkgconfig(libpng)
 BuildRequires : pkgconfig(xft)
 Patch1: fltk-config-dynlibs.patch
@@ -40,27 +41,19 @@ OpenGL(r) and its built-in GLUT emulation.
 %package bin
 Summary: bin components for the fltk package.
 Group: Binaries
-Requires: fltk-data
+Requires: fltk-license = %{version}-%{release}
 
 %description bin
 bin components for the fltk package.
 
 
-%package data
-Summary: data components for the fltk package.
-Group: Data
-
-%description data
-data components for the fltk package.
-
-
 %package dev
 Summary: dev components for the fltk package.
 Group: Development
-Requires: fltk-lib
-Requires: fltk-bin
-Requires: fltk-data
-Provides: fltk-devel
+Requires: fltk-lib = %{version}-%{release}
+Requires: fltk-bin = %{version}-%{release}
+Provides: fltk-devel = %{version}-%{release}
+Requires: fltk = %{version}-%{release}
 
 %description dev
 dev components for the fltk package.
@@ -69,6 +62,7 @@ dev components for the fltk package.
 %package doc
 Summary: doc components for the fltk package.
 Group: Documentation
+Requires: fltk-man = %{version}-%{release}
 
 %description doc
 doc components for the fltk package.
@@ -77,28 +71,59 @@ doc components for the fltk package.
 %package lib
 Summary: lib components for the fltk package.
 Group: Libraries
-Requires: fltk-data
+Requires: fltk-license = %{version}-%{release}
 
 %description lib
 lib components for the fltk package.
 
 
+%package license
+Summary: license components for the fltk package.
+Group: Default
+
+%description license
+license components for the fltk package.
+
+
+%package man
+Summary: man components for the fltk package.
+Group: Default
+
+%description man
+man components for the fltk package.
+
+
 %prep
 %setup -q -n fltk-1.3.4-2
+cd %{_builddir}/fltk-1.3.4-2
 %patch1 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1505747386
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1590685564
+export GCC_IGNORE_WERROR=1
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 %configure --disable-static --enable-threads --enable-xft --enable-shared
-make V=1  %{?_smp_mflags}
+make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1505747386
+export SOURCE_DATE_EPOCH=1590685564
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/fltk
+cp %{_builddir}/fltk-1.3.4-2/COPYING %{buildroot}/usr/share/package-licenses/fltk/804b2d61c0867ff1b0b0cb5648970d5aba808713
+cp %{_builddir}/fltk-1.3.4-2/documentation/src/license.dox %{buildroot}/usr/share/package-licenses/fltk/ed64c0250faa1fc40311e0bf1a2f4fba654beaad
+cp %{_builddir}/fltk-1.3.4-2/png/LICENSE %{buildroot}/usr/share/package-licenses/fltk/ff48ba33080ba25f8b499d09b47cd9679dde252f
+cp %{_builddir}/fltk-1.3.4-2/src/xutf8/COPYING %{buildroot}/usr/share/package-licenses/fltk/93fd5552183411097c82fa6032cab1142ae7887b
+cp %{_builddir}/fltk-1.3.4-2/src/xutf8/lcUniConv/COPYRIGHT %{buildroot}/usr/share/package-licenses/fltk/d9fcea34224bf0b199bd29e6f25d0280f5e05ca8
 %make_install
 
 %files
@@ -108,12 +133,6 @@ rm -rf %{buildroot}
 %defattr(-,root,root,-)
 /usr/bin/fltk-config
 /usr/bin/fluid
-
-%files data
-%defattr(-,root,root,-)
-/usr/share/man/cat1/fltk-config.1
-/usr/share/man/cat1/fluid.1
-/usr/share/man/cat3/fltk.3
 
 %files dev
 %defattr(-,root,root,-)
@@ -265,12 +284,11 @@ rm -rf %{buildroot}
 /usr/lib64/libfltk_forms.so
 /usr/lib64/libfltk_gl.so
 /usr/lib64/libfltk_images.so
+/usr/share/man/man3/fltk.3
 
 %files doc
-%defattr(-,root,root,-)
+%defattr(0644,root,root,0755)
 %doc /usr/share/doc/fltk/*
-%doc /usr/share/man/man1/*
-%doc /usr/share/man/man3/*
 
 %files lib
 %defattr(-,root,root,-)
@@ -278,3 +296,19 @@ rm -rf %{buildroot}
 /usr/lib64/libfltk_forms.so.1.3
 /usr/lib64/libfltk_gl.so.1.3
 /usr/lib64/libfltk_images.so.1.3
+
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/fltk/804b2d61c0867ff1b0b0cb5648970d5aba808713
+/usr/share/package-licenses/fltk/93fd5552183411097c82fa6032cab1142ae7887b
+/usr/share/package-licenses/fltk/d9fcea34224bf0b199bd29e6f25d0280f5e05ca8
+/usr/share/package-licenses/fltk/ed64c0250faa1fc40311e0bf1a2f4fba654beaad
+/usr/share/package-licenses/fltk/ff48ba33080ba25f8b499d09b47cd9679dde252f
+
+%files man
+%defattr(0644,root,root,0755)
+/usr/share/man/cat1/fltk-config.1
+/usr/share/man/cat1/fluid.1
+/usr/share/man/cat3/fltk.3
+/usr/share/man/man1/fltk-config.1
+/usr/share/man/man1/fluid.1
