@@ -1,8 +1,9 @@
-diff -Naur fltk-1.3.3-orig/fltk-config.in fltk-1.3.3/fltk-config.in
---- fltk-1.3.3-orig/fltk-config.in	2014-12-31 15:43:07.203519633 -0500
-+++ fltk-1.3.3/fltk-config.in	2014-12-31 15:49:01.636277725 -0500
-@@ -54,21 +54,6 @@
- 	bindir="$selfdir/fluid"
+diff --git a/fltk-config.in b/fltk-config.in
+index a33de79..fe568ae 100644
+--- a/fltk-config.in
++++ b/fltk-config.in
+@@ -53,21 +53,6 @@ CAIROFLAGS="@CAIROFLAGS@"
+ if test -f "$selfdir/FL/Fl_Window.H"; then
  	includedir="$selfdir"
  	libdir="$selfdir/lib"
 -
@@ -23,7 +24,7 @@ diff -Naur fltk-1.3.3-orig/fltk-config.in fltk-1.3.3/fltk-config.in
  fi
  
  if test -d $includedir/FL/images; then
-@@ -76,11 +61,6 @@
+@@ -75,11 +60,6 @@ if test -d $includedir/FL/images; then
  	CXXFLAGS="-I$includedir/FL/images $CXXFLAGS"
  fi
  
@@ -35,7 +36,7 @@ diff -Naur fltk-1.3.3-orig/fltk-config.in fltk-1.3.3/fltk-config.in
  # libraries to link with:
  LIBNAME="@LIBNAME@"
  DSONAME="@DSONAME@"
-@@ -230,25 +210,20 @@
+@@ -233,25 +213,20 @@ else
  fi
  
  # Calculate needed libraries
@@ -47,8 +48,8 @@ diff -Naur fltk-1.3.3-orig/fltk-config.in fltk-1.3.3/fltk-config.in
 -    LDSTATIC="$libdir/libfltk_forms.a $LDSTATIC"
  fi
  if test x$use_gl = xyes; then
-     LDLIBS="-lfltk_gl$SHAREDSUFFIX @GLLIB@ $LDLIBS"
--    LDSTATIC="$libdir/libfltk_gl.a @GLLIB@ $LDSTATIC"
+     LDLIBS="-lfltk_gl$SHAREDSUFFIX @GLLIBS@ $LDLIBS"
+-    LDSTATIC="$libdir/libfltk_gl.a @GLLIBS@ $LDSTATIC"
  fi
  if test x$use_images = xyes; then
      LDLIBS="-lfltk_images$SHAREDSUFFIX $IMAGELIBS $LDLIBS"
@@ -61,7 +62,7 @@ diff -Naur fltk-1.3.3-orig/fltk-config.in fltk-1.3.3/fltk-config.in
  fi
  
  LDLIBS="$DSOLINK $LDFLAGS $libs $LDLIBS"
-@@ -359,26 +334,26 @@
+@@ -369,26 +344,26 @@ if test "$echo_ldstaticflags" = "yes"; then
  fi
  
  if test "$echo_libs" = "yes"; then
