@@ -1,4 +1,4 @@
-1.3.8
+1.3.9
 alsa-lib-dev
 doxygen
 freetype-dev
@@ -8,4 +8,5 @@ libXcursor-dev
 libjpeg-turbo-dev
 pkgconfig(freetype2)
 pkgconfig(libpng)
+pkgconfig(x11)
 pkgconfig(xft)

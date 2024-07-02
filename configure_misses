@@ -1,10 +1,14 @@
 Configure miss: X overlay visuals
+Configure miss: X overlay visuals
+Configure miss: g++ option to enable C++11 features
+Configure miss: g++ option to enable C++11 features
 Configure miss: libpng/png.h
-Configure miss: libpng/png.h presence
-Configure miss: libpng/png.h usability
+Configure miss: libpng/png.h
+Configure miss: pthread_create using -lpthreads
 Configure miss: pthread_create using -lpthreads
 Configure miss: sys/stdtypes.h
-Configure miss: sys/stdtypes.h presence
-Configure miss: sys/stdtypes.h usability
+Configure miss: sys/stdtypes.h
 Configure miss: windres
+Configure miss: windres
+Configure miss: xprop
 Configure miss: xprop
